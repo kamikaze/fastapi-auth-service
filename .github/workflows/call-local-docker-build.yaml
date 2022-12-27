@@ -37,7 +37,7 @@ jobs:
     with:
 
       dockerhub-enable: true
-      ghcr-enable: true
+      ghcr-enable: false
       platforms: linux/amd64,linux/arm64
 
       image-names: |
