@@ -37,9 +37,9 @@ jobs:
     with:
 
       dockerhub-enable: true
-      ghcr-enable: false
+      ghcr-enable: true
       platforms: linux/amd64,linux/arm64
 
       image-names: |
-        ${{ github.repository }}
+        ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
         ghcr.io/${{ github.repository }}

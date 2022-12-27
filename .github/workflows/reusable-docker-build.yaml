@@ -51,7 +51,7 @@ on:
         required: false
         type: string
         default: |
-          ${{ github.repository }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
           ghcr.io/${{ github.repository }}
       tag-rules:
         # https://github.com/marketplace/actions/docker-metadata-action#tags-input
