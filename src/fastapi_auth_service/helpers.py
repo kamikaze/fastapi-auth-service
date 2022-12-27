@@ -8,7 +8,7 @@ from alembic import command
 from alembic.config import Config
 from asyncpg import CannotConnectNowError
 
-from fastapi_project_template.conf import settings
+from fastapi_auth_service.conf import settings
 
 logger = logging.getLogger(__name__)
 

@@ -8,7 +8,7 @@ from databases.backends.postgres import Record
 from fastapi_pagination.bases import AbstractPage
 from fastapi_pagination.ext.databases import paginate
 
-from fastapi_project_template.db.models import UserGroup, User
+from fastapi_auth_service.db.models import UserGroup, User
 
 logger = logging.getLogger(__name__)
 t = gettext.translation('base', Path(Path(__file__).parent, 'locale'), fallback=True, languages=['lv_LV'])

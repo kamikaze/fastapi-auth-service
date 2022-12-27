@@ -1,3 +1,3 @@
-FastAPI based project
-=====================
+FastAPI auth service
+====================
 

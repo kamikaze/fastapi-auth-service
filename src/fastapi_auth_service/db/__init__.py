@@ -2,7 +2,7 @@ import databases
 from sqlalchemy import MetaData
 from sqlalchemy.ext.declarative import declarative_base
 
-from fastapi_project_template.conf import settings
+from fastapi_auth_service.conf import settings
 
 metadata = MetaData()
 Base = declarative_base(metadata=metadata)

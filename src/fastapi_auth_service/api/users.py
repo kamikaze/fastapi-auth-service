@@ -7,10 +7,10 @@ from fastapi import Request, Depends
 from fastapi_users import BaseUserManager, UUIDIDMixin
 from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
 
-from fastapi_project_template.api.v1.schemas import UserCreate, UserUpdate
-from fastapi_project_template.conf import settings
-from fastapi_project_template.db import database
-from fastapi_project_template.db.models import User
+from fastapi_auth_service.api.v1.schemas import UserCreate, UserUpdate
+from fastapi_auth_service.conf import settings
+from fastapi_auth_service.db import database
+from fastapi_auth_service.db.models import User
 
 logger = logging.getLogger()
 

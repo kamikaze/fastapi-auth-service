@@ -1,5 +1,5 @@
 apiVersion: v2
-name: fastapi-project-template
+name: auth-service
 description: A Helm chart for Kubernetes deployment of FastAPI project template
 
 # A chart can be either an 'application' or a 'library' chart.

@@ -1,5 +1,5 @@
 """
-    Dummy conftest.py for fastapi_project_template.
+    Dummy conftest.py for fastapi_auth_service.
 
     If you don't know what this is for, just leave it empty.
     Read more about conftest.py under:

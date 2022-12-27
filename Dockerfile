@@ -9,8 +9,8 @@ RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN apt-get install -y gcc g++ make postgresql-server-dev-all libpq-dev libffi-dev git cargo
 
 COPY ./ /tmp/build
-COPY src/fastapi_project_template/db/migrations ./migrations/
-COPY src/fastapi_project_template/db/alembic.ini ./alembic.ini
+COPY src/fastapi_auth_service/db/migrations ./migrations/
+COPY src/fastapi_auth_service/db/alembic.ini ./alembic.ini
 
 RUN  (cd /tmp/build \
      && python3 -m venv venv-dev \
@@ -26,7 +26,7 @@ RUN  export APP_HOME=/usr/local/app \
          && python3 -m pip install -U pip \
          && python3 -m pip install -U setuptools \
          && python3 -m pip install -U wheel \
-         && python3 -m pip install -U fastapi_project_template --find-links=/tmp/build/dist)
+         && python3 -m pip install -U fastapi_auth_service --find-links=/tmp/build/dist)
 
 
 FROM python:3.11-slim
@@ -51,5 +51,5 @@ USER  appuser
 EXPOSE 8080
 
 
-CMD ["/usr/local/app/venv/bin/python3", "-m", "uvicorn", "fastapi_project_template.api.http:app", \
+CMD ["/usr/local/app/venv/bin/python3", "-m", "uvicorn", "fastapi_auth_service.api.http:app", \
      "--host", "0.0.0.0", "--port", "8080"]

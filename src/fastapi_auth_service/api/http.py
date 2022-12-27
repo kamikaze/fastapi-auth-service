@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_pagination import add_pagination
 
-from fastapi_project_template.api.v1.endpoints import router, auth_router, users_router
+from fastapi_auth_service.api.v1.endpoints import router, auth_router, users_router
 
 origins = [
     'http://localhost',

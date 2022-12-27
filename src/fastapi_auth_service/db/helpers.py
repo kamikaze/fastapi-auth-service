@@ -4,11 +4,11 @@ import sqlalchemy as sa
 from fastapi_users.exceptions import UserAlreadyExists
 from passlib import pwd
 
-from fastapi_project_template.api.users import create_user
-from fastapi_project_template.api.v1.schemas import UserCreate
-from fastapi_project_template.conf import settings
-from fastapi_project_template.db import database
-from fastapi_project_template.db.models import User
+from fastapi_auth_service.api.users import create_user
+from fastapi_auth_service.api.v1.schemas import UserCreate
+from fastapi_auth_service.conf import settings
+from fastapi_auth_service.db import database
+from fastapi_auth_service.db.models import User
 
 logger = logging.getLogger()
 

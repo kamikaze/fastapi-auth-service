@@ -7,7 +7,7 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 from sqlalchemy.ext.asyncio import AsyncEngine
 
-from fastapi_project_template.db.models import Base
+from fastapi_auth_service.db.models import Base
 
 
 sys.path.append(os.getcwd())

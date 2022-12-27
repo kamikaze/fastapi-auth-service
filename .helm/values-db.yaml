@@ -7,6 +7,6 @@ primary:
     size: 1Gi
 
 auth:
-  database: "fastapi_project_template"
+  database: "auth-service"
   username: "dev"
   password: "dev"

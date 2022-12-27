@@ -2,16 +2,16 @@
 replicaCount: 1
 
 postgresql:
-  database: "fastapi_project_template"
+  database: "auth-service"
   username: "dev"
   password: "dev"
-  host: "fastapi-project-template-postgresql"
+  host: "auth-service-postgresql"
   port: "5432"
 
 
 backend:
   image:
-    repository: "kamikazer/fastapi-project-template"
+    repository: "kamikazer/fastapi-auth-service"
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: "latest"
@@ -44,7 +44,7 @@ serviceAccount:
   annotations: { }
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: "fastapi-project-template"
+  name: "auth-service"
 
 podAnnotations: { }
 
@@ -67,7 +67,7 @@ ingress:
       paths:
         - pathType: Prefix
           path: "/api"
-          name: "fastapi-project-template"
+          name: "fastapi-auth-service"
           port: 8088
   tls: [ ]
 

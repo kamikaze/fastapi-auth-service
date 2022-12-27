@@ -17,7 +17,7 @@ spec:
               args:
                 - /usr/local/app/venv/bin/python3
                 - -m
-                - fastapi_project_template.jobs
+                - fastapi_auth_service.jobs
                 - --job
                 - foo
               env:
@@ -48,7 +48,7 @@ spec:
               args:
                 - /usr/local/app/venv/bin/python3
                 - -m
-                - fastapi_project_template.jobs
+                - fastapi_auth_service.jobs
                 - --job
                 - bar
               env:

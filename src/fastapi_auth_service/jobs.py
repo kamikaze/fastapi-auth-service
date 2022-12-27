@@ -2,7 +2,7 @@ import argparse
 import asyncio
 import logging.config
 
-from fastapi_project_template.conf import settings
+from fastapi_auth_service.conf import settings
 
 
 logging.config.dictConfig({

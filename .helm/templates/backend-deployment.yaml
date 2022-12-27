@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "fastapi-project-template.fullname" . }}-backend
+  name: {{ include "auth-service.fullname" . }}-backend
   labels:
-    {{- include "fastapi-project-template.labels" . | nindent 4 }}
+    {{- include "auth-service.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -11,7 +11,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "fastapi-project-template.selectorLabels" . | nindent 6 }}
+      {{- include "auth-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,14 +19,14 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "fastapi-project-template.selectorLabels" . | nindent 8 }}
-        app: fastapi-project-template
+        {{- include "auth-service.selectorLabels" . | nindent 8 }}
+        app: auth-service
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "fastapi-project-template.serviceAccountName" . }}
+      serviceAccountName: {{ include "auth-service.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

@@ -2,7 +2,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: fastapi-project-template
+  name: auth-service
 spec:
   entryPoints:
     - web

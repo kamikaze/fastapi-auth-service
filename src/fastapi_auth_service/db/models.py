@@ -4,7 +4,7 @@ from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.sql import expression
 from sqlalchemy.sql.ddl import CreateColumn
 
-from fastapi_project_template.db import Base
+from fastapi_auth_service.db import Base
 
 
 class UTCNow(expression.FunctionElement):
