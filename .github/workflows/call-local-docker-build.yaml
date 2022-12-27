@@ -29,17 +29,14 @@ jobs:
       pull-requests: write
 
     secrets:
-
       dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-
       dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
 
     with:
-
       dockerhub-enable: true
       ghcr-enable: true
       platforms: linux/amd64,linux/arm64
 
       image-names: |
-        ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}
+        kamikazer/${{ github.event.repository.name }}
         ghcr.io/${{ github.repository }}
