@@ -70,8 +70,8 @@ ingress:
       paths:
         - pathType: Prefix
           path: "/api"
-          name: "fastapi-auth-service"
-          port: 8088
+          name: "auth-service"
+          port: 8080
   tls: [ ]
 
 resources: { }

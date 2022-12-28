@@ -10,11 +10,13 @@ spec:
   routes:
     {{- range $item := .Values.ingress.hosts }}
     {{- if $item.host }}
-    - match: Host(`{{ $item.host }}`) && PathPrefix(`{{ $item.path }}`)
+    {{- range $path := $item.paths }}
+    - match: Host(`{{ $item.host }}`) && PathPrefix(`{{ $path.path }}`)
       kind: Rule
       services:
-        - name: {{ $item.name }}
-          port: {{ $item.port }}
+        - name: {{ $path.name }}
+          port: {{ $path.port }}
+    {{- end }}
     {{- end }}
     {{- end }}
 {{- end }}
