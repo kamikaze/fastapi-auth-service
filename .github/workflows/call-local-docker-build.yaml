@@ -11,6 +11,7 @@ on:
     paths-ignore:
       - 'README.md'
       - '.github/linters/**'
+      - '.helm/**'
   pull_request:
     paths-ignore:
       - 'README.md'
