@@ -1,0 +1,13 @@
+architecture: standalone
+auth:
+  enabled: true
+  password: "dev"
+  sentinel: true
+master:
+  disableCommands:
+  - FLUSHDB
+  - FLUSHALL
+  persistence:
+    enabled: false
+metrics:
+  enabled: true

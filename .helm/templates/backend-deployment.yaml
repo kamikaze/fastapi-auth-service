@@ -52,6 +52,18 @@ spec:
           env:
             - name: DB_DSN
               value: "postgresql+asyncpg://{{ .Values.postgresql.username }}:{{ .Values.postgresql.password }}@{{ .Values.postgresql.host }}:{{ .Values.postgresql.port }}/{{ .Values.postgresql.database }}"
+            - name: REDIS_DSN
+              value: "{{ .Values.redis.dsn }}"
+            {{- if .Values.redis.passwordSecretName }}
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Values.redis.passwordSecretName }}"
+                  key: "{{ .Values.redis.passwordSecretKey }}"
+            {{- else }}
+            - name: REDIS_PASSWORD
+              value: "{{ .Values.redis.password }}"
+            {{- end }}
             - name: LOGGING_LEVEL
               value: "{{ .Values.backend.loggingLevel }}"
             - name: SERVICE_ADDR

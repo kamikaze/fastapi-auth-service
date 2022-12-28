@@ -5,9 +5,15 @@ postgresql:
   database: "auth-service"
   username: "dev"
   password: "dev"
-  host: "auth-service-postgresql"
+  host: "postgresql.auth-service"
   port: "5432"
 
+
+redis:
+  dsn: "redis://auth-service-redis:6379/0"
+  password: "dev"
+  passwordSecretName: ""
+  passwordSecretKey: ""
 
 backend:
   image:
