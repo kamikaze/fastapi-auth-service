@@ -39,6 +39,7 @@ class Group(BaseDBModel, Base):
 class User(SQLAlchemyBaseUserTableUUID, Base):
     __tablename__ = 'users'
 
+    username = Column(String, unique=True, index=True, nullable=False)
     password_changed_at = Column(DateTime(timezone=True))
 
 

@@ -19,8 +19,9 @@ from fastapi_auth_service.api.v1.schemas import (
     UserCreate, UserUpdate, UserItem, UserGroup, UserRead
 )
 from fastapi_auth_service.conf import settings
-from fastapi_auth_service.db import redis_db, engine
+from fastapi_auth_service.db import engine
 from fastapi_auth_service.db.models import User
+from fastapi_auth_service.db.redis import redis_db
 from fastapi_auth_service.helpers import connect_to_db
 
 logger = logging.getLogger(__name__)
