@@ -1,12 +1,16 @@
-import databases
+import redis
 from sqlalchemy import MetaData
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
 from fastapi_auth_service.conf import settings
 
 metadata = MetaData()
 Base = declarative_base(metadata=metadata)
-database = databases.Database(settings.db_dsn)
+engine = create_async_engine(settings.db_dsn)
+async_session_maker = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+redis_db = redis.asyncio.from_url(settings.redis_dsn, decode_responses=True)
 
 
 async def is_healthy(pg) -> bool:

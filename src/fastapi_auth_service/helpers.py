@@ -2,7 +2,6 @@ import asyncio
 import datetime
 import logging
 import os
-import pathlib
 
 from alembic import command
 from alembic.config import Config
@@ -43,7 +42,7 @@ def run_db_migrations(config, dsn: str, script_location: str) -> None:
     os.chdir(original_wd)
 
 
-async def connect_to_db(database):
+async def connect_to_db(engine):
     logger.info('Waiting for services')
     logger.debug(f'DB_DSN: {settings.db_dsn}')
     timeout = 0.001
@@ -51,7 +50,8 @@ async def connect_to_db(database):
 
     for i in range(15):
         try:
-            await database.connect()
+            async with engine.connect():
+                pass
         except (ConnectionRefusedError, CannotConnectNowError):
             timeout *= 2
             await asyncio.sleep(timeout)
@@ -62,15 +62,6 @@ async def connect_to_db(database):
         msg = f'Unable to connect database for {int(total_timeout)}s'
         logger.error(msg)
         raise ConnectionRefusedError(msg)
-
-    try:
-        if settings.alembic_auto_upgrade and settings.alembic_config:
-            script_location = str(pathlib.Path(__file__).parent.absolute())
-            run_db_migrations(settings.alembic_config, settings.db_dsn, f'{script_location}/db')
-        else:
-            logger.info('Automatic DB migration is disabled')
-    except Exception as e:
-        logger.error(f'Automatic DB migration failed: {e}')
 
 
 def tries(times):

@@ -8,17 +8,18 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.responses import ORJSONResponse
 from fastapi_pagination import Page
 from fastapi_users import FastAPIUsers
-from fastapi_users.authentication import AuthenticationBackend, JWTStrategy, CookieTransport
+from fastapi_users.authentication import AuthenticationBackend, JWTStrategy, CookieTransport, RedisStrategy
 from pydantic import Json
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from fastapi_auth_service import core
 from fastapi_auth_service.api import users
-from fastapi_auth_service.api.users import get_user_manager
+from fastapi_auth_service.api.users import get_user_manager, get_async_session
 from fastapi_auth_service.api.v1.schemas import (
     UserCreate, UserUpdate, UserItem, UserGroup, UserRead
 )
 from fastapi_auth_service.conf import settings
-from fastapi_auth_service.db import database
+from fastapi_auth_service.db import redis_db, engine
 from fastapi_auth_service.db.models import User
 from fastapi_auth_service.helpers import connect_to_db
 
@@ -31,7 +32,11 @@ def get_jwt_strategy() -> JWTStrategy:
     return JWTStrategy(secret=settings.auth_secret, lifetime_seconds=3600)
 
 
-auth_backend = AuthenticationBackend(name='cluserauth', transport=cookie_transport, get_strategy=get_jwt_strategy)
+def get_redis_strategy() -> RedisStrategy:
+    return RedisStrategy(redis_db, lifetime_seconds=3600)
+
+
+auth_backend = AuthenticationBackend(name='cluserauth', transport=cookie_transport, get_strategy=get_redis_strategy)
 auth_backends = [auth_backend, ]
 fastapi_users = FastAPIUsers[User, uuid.UUID](
     get_user_manager,
@@ -44,12 +49,13 @@ users_router = fastapi_users.get_users_router(UserRead, UserUpdate, requires_ver
 
 @router.on_event('startup')
 async def startup():
-    await connect_to_db(database)
+    await connect_to_db(engine)
 
 
 @router.on_event('shutdown')
 async def shutdown():
-    await database.disconnect()
+    logger.warning('Not Implemented')
+    # await database.disconnect()
 
 
 def _handle_exceptions_helper(status_code, *args):
@@ -79,9 +85,10 @@ def handle_exceptions(func):
 @router.get('/users', response_model=Page[UserItem], response_class=ORJSONResponse, tags=['Admin'])
 @handle_exceptions
 async def get_users(search: Optional[Json] = None, order_by: Optional[str] = None,
-                    user=Depends(get_current_user)):
+                    user=Depends(get_current_user),
+                    session: AsyncSession = Depends(get_async_session)):
     if user.is_superuser:
-        return await core.get_users(database, search, order_by)
+        return await core.get_users(session, search, order_by)
 
     raise HTTPException(status_code=403)
 
@@ -100,8 +107,9 @@ async def create_user(new_user: UserCreate, user=Depends(get_current_user)):
 @router.get('/user-groups', response_model=List[UserGroup], response_class=ORJSONResponse, tags=['Admin'])
 @handle_exceptions
 async def get_user_groups(search: Optional[Json[Any]] = None, order_by: Optional[str] = None,
-                          user=Depends(get_current_user)):
+                          user=Depends(get_current_user),
+                          session: AsyncSession = Depends(get_async_session)):
     if user.is_active:
-        return await core.get_user_groups(database, search, order_by)
+        return await core.get_user_groups(session, search, order_by)
 
     raise HTTPException(status_code=403)

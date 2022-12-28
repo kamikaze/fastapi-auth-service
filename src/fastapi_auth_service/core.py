@@ -6,7 +6,8 @@ from typing import Mapping, Optional, Sequence
 import sqlalchemy as sa
 from databases.backends.postgres import Record
 from fastapi_pagination.bases import AbstractPage
-from fastapi_pagination.ext.databases import paginate
+from fastapi_pagination.ext.async_sqlalchemy import paginate
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from fastapi_auth_service.db.models import UserGroup, User
 
@@ -15,23 +16,23 @@ t = gettext.translation('base', Path(Path(__file__).parent, 'locale'), fallback=
 _ = t.gettext
 
 
-async def get_users(database, search: Optional[Mapping[str, str]] = None,
+async def get_users(session: AsyncSession, search: Optional[Mapping[str, str]] = None,
                     order_by: Optional[str] = None) -> AbstractPage[Record]:
     query = sa.select([User])
-    result = await paginate(database, query)
+    result = await paginate(session, query)
 
     return result
 
 
-async def get_user(database, user_id: str) -> Record:
+async def get_user(session: AsyncSession, user_id: str) -> Record:
     query = sa.select([User]).where(User.id == user_id)
 
-    return await database.fetch_row(query)
+    return await session.execute(query)
 
 
-async def get_user_groups(database, search: Optional[Mapping[str, str]] = None,
-                          order_by: Optional[str] = None) -> Sequence[Record]:
+async def get_user_groups(session: AsyncSession, search: Optional[Mapping[str, str]] = None,
+                          order_by: Optional[str] = None) -> AbstractPage[Record]:
     query = sa.select([UserGroup]).order_by(UserGroup.name)
-    result = await database.fetch_all(query)
+    result = await paginate(session, query)
 
     return result
