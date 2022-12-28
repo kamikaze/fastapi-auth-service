@@ -40,6 +40,7 @@ jobs:
 
   docker-build-and-push:
     name: Build and push Docker images
+    needs: pypi-build-and-push
     uses: ./.github/workflows/reusable-docker-build.yaml
 
     permissions:
@@ -55,6 +56,7 @@ jobs:
       dockerhub-enable: true
       ghcr-enable: true
       platforms: linux/amd64,linux/arm64
+      file: Dockerfile.release
 
       image-names: |
         kamikazer/${{ github.event.repository.name }}
