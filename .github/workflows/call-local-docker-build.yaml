@@ -5,6 +5,9 @@
 name: Docker Build
 
 on:
+  release:
+    types: [published]
+
   push:
     branches:
       - master
@@ -16,6 +19,7 @@ on:
     paths-ignore:
       - 'README.md'
       - '.github/linters/**'
+      - '.helm/**'
 
 jobs:
   call-docker-build:
