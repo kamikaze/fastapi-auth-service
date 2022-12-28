@@ -24,9 +24,6 @@ backend:
   service:
     type: ClusterIP
     port: 8080
-  ingress:
-    host: ""
-    pathPrefix: "/api"
   loggingLevel: INFO
   timezone: "UTC"
 
