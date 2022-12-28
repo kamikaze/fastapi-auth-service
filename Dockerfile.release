@@ -18,6 +18,7 @@ RUN  export APP_HOME=/usr/local/app \
          && python3 -m pip install -U pip \
          && python3 -m pip install -U setuptools \
          && python3 -m pip install -U wheel \
+         && python3 -m pip install -U uvloop \
          && python3 -m pip install -U fastapi_auth_service)
 
 

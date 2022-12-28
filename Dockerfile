@@ -25,6 +25,7 @@ RUN  (python3 -m venv venv \
       && python3 -m pip install -U pip \
       && python3 -m pip install -U setuptools \
       && python3 -m pip install -U wheel \
+      && python3 -m pip install -U uvloop \
       && python3 -m pip install -U /tmp/build/dist/*.whl)
 
 
