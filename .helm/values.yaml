@@ -20,12 +20,14 @@ backend:
     repository: "kamikazer/fastapi-auth-service"
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "latest"
+    tag: "gha-3795736580"
   service:
     type: ClusterIP
     port: 8080
   loggingLevel: INFO
-  timezone: "UTC"
+  timezone: "Europe/Riga"
+  bootstrapUserEmail: ""
+  bootstrapUserPassword: ""
 
 imageCredentials:
   name: dockerregistrycreds
@@ -63,10 +65,10 @@ securityContext: { }
 # runAsUser: 1000
 
 ingress:
-  enabled: false
+  enabled: true
   annotations: { }
   hosts:
-    - host: ""
+    - host: "auth.dev.laboratorija.lv"
       paths:
         - pathType: Prefix
           path: "/api"

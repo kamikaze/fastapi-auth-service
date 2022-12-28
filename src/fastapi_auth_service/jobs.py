@@ -3,7 +3,8 @@ import asyncio
 import logging.config
 
 from fastapi_auth_service.conf import settings
-
+from fastapi_auth_service.db import async_session_maker
+from fastapi_auth_service.db.helpers import bootstrap_user
 
 logging.config.dictConfig({
     'version': 1,
@@ -42,19 +43,15 @@ def get_parsed_args():
     return args
 
 
-async def foo():
-    logger.info('Foo')
-
-
-async def bar():
-    logger.info('Bar')
+async def _bootstrap_user():
+    async with async_session_maker() as session:
+        await bootstrap_user(session, settings)
 
 
 async def main():
     args = get_parsed_args()
     job_mapping = {
-        'foo': foo,
-        'bar': bar,
+        'bootstrap_user': _bootstrap_user,
     }
 
     try:

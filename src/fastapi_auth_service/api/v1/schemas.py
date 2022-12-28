@@ -10,6 +10,7 @@ class UserRead(schemas.BaseUser[uuid.UUID]):
 
 
 class UserCreate(schemas.BaseUserCreate):
+    username: str
     group_id: Optional[int] = None
 
 
