@@ -27,6 +27,7 @@ backend:
   loggingLevel: INFO
   timezone: "Europe/Riga"
   bootstrapUserEmail: ""
+  bootstrapUserName: ""
   bootstrapUserPassword: ""
 
 imageCredentials:
