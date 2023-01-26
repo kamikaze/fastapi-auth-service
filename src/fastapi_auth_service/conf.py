@@ -1,9 +1,8 @@
-from pydantic import BaseSettings, PostgresDsn, SecretStr, RedisDsn
+from pydantic import PostgresDsn, SecretStr, RedisDsn
+from python3_commons.conf import CommonSettings
 
 
-class Settings(BaseSettings):
-    logging_level: str = 'INFO'
-    logging_format: str = '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+class Settings(CommonSettings):
     db_dsn: PostgresDsn = None
     redis_dsn: RedisDsn = None
     redis_password: SecretStr = None

@@ -11,12 +11,12 @@ LOGGING_CONFIG = {
     'disable_existing_loggers': False,
     'formatters': {
         'default': {
-            '()': 'fastapi_auth_service.logging.formatter.JSONFormatter',
+            '()': 'python3_commons.logging.formatter.JSONFormatter',
         },
     },
     'filters': {
         'info_and_below': {
-            '()': 'fastapi_auth_service.logging.filters.filter_maker',
+            '()': 'python3_commons.logging.filters.filter_maker',
             'level': 'INFO'
         }
     },

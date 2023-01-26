@@ -9,20 +9,19 @@ from fastapi_pagination import Page
 from fastapi_users import FastAPIUsers
 from fastapi_users.authentication import AuthenticationBackend, JWTStrategy, CookieTransport
 from pydantic import Json
+from python3_commons.db import connect_to_db
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from fastapi_auth_service import core
 from fastapi_auth_service.api import users
-from fastapi_auth_service.api.users import get_user_manager, get_async_session
+from fastapi_auth_service.api.users import get_user_manager
 from fastapi_auth_service.api.v1.schemas import (
     UserCreate, UserUpdate, UserItem, UserGroup, UserRead
 )
 from fastapi_auth_service.authentication import RedisStrategy
 from fastapi_auth_service.conf import settings
-from fastapi_auth_service.db import engine
 from fastapi_auth_service.db.models import User
 from fastapi_auth_service.db.redis import redis_db
-from fastapi_auth_service.helpers import connect_to_db
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -50,13 +49,12 @@ users_router = fastapi_users.get_users_router(UserRead, UserUpdate, requires_ver
 
 @router.on_event('startup')
 async def startup():
-    await connect_to_db(engine)
+    await connect_to_db(database, settings.db_dsn)
 
 
 @router.on_event('shutdown')
 async def shutdown():
-    logger.warning('Not Implemented')
-    # await database.disconnect()
+    await database.disconnect()
 
 
 def _handle_exceptions_helper(status_code, *args):
